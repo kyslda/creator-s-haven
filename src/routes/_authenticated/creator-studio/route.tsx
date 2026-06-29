@@ -63,7 +63,7 @@ function StudioLayout() {
           {nav.map(({ to, label, icon: Icon, exact }) => {
             const active = isActive(to, exact);
             return (
-              <Link key={to} to={to} onClick={() => setMobileOpen(false)}
+              <Link key={to} to={to as any} onClick={() => setMobileOpen(false)}
                 className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${active ? "bg-primary/15 text-primary" : "text-sidebar-foreground hover:bg-sidebar-accent"}`}>
                 <Icon className="h-4 w-4" /> {label}
               </Link>
