@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedCreatorStudioRouteRouteImport } from './routes/_authenticated/creator-studio/route'
 import { Route as AuthenticatedCreatorStudioIndexRouteImport } from './routes/_authenticated/creator-studio/index'
 import { Route as AuthenticatedCreatorStudioUploadRouteImport } from './routes/_authenticated/creator-studio/upload'
+import { Route as AuthenticatedCreatorStudioSubscribersRouteImport } from './routes/_authenticated/creator-studio/subscribers'
 import { Route as AuthenticatedCreatorStudioPostsRouteImport } from './routes/_authenticated/creator-studio/posts'
 
 const AuthRoute = AuthRouteImport.update({
@@ -49,6 +50,12 @@ const AuthenticatedCreatorStudioUploadRoute =
     path: '/upload',
     getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
   } as any)
+const AuthenticatedCreatorStudioSubscribersRoute =
+  AuthenticatedCreatorStudioSubscribersRouteImport.update({
+    id: '/subscribers',
+    path: '/subscribers',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
 const AuthenticatedCreatorStudioPostsRoute =
   AuthenticatedCreatorStudioPostsRouteImport.update({
     id: '/posts',
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
   '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
+  '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
   '/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
 }
@@ -68,6 +76,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
+  '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
   '/creator-studio': typeof AuthenticatedCreatorStudioIndexRoute
 }
@@ -78,6 +87,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
   '/_authenticated/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
+  '/_authenticated/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/_authenticated/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
   '/_authenticated/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
 }
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/creator-studio'
     | '/creator-studio/posts'
+    | '/creator-studio/subscribers'
     | '/creator-studio/upload'
     | '/creator-studio/'
   fileRoutesByTo: FileRoutesByTo
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/creator-studio/posts'
+    | '/creator-studio/subscribers'
     | '/creator-studio/upload'
     | '/creator-studio'
   id:
@@ -104,6 +116,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/creator-studio'
     | '/_authenticated/creator-studio/posts'
+    | '/_authenticated/creator-studio/subscribers'
     | '/_authenticated/creator-studio/upload'
     | '/_authenticated/creator-studio/'
   fileRoutesById: FileRoutesById
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCreatorStudioUploadRouteImport
       parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
     }
+    '/_authenticated/creator-studio/subscribers': {
+      id: '/_authenticated/creator-studio/subscribers'
+      path: '/subscribers'
+      fullPath: '/creator-studio/subscribers'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioSubscribersRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
     '/_authenticated/creator-studio/posts': {
       id: '/_authenticated/creator-studio/posts'
       path: '/posts'
@@ -170,6 +190,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedCreatorStudioRouteRouteChildren {
   AuthenticatedCreatorStudioPostsRoute: typeof AuthenticatedCreatorStudioPostsRoute
+  AuthenticatedCreatorStudioSubscribersRoute: typeof AuthenticatedCreatorStudioSubscribersRoute
   AuthenticatedCreatorStudioUploadRoute: typeof AuthenticatedCreatorStudioUploadRoute
   AuthenticatedCreatorStudioIndexRoute: typeof AuthenticatedCreatorStudioIndexRoute
 }
@@ -177,6 +198,8 @@ interface AuthenticatedCreatorStudioRouteRouteChildren {
 const AuthenticatedCreatorStudioRouteRouteChildren: AuthenticatedCreatorStudioRouteRouteChildren =
   {
     AuthenticatedCreatorStudioPostsRoute: AuthenticatedCreatorStudioPostsRoute,
+    AuthenticatedCreatorStudioSubscribersRoute:
+      AuthenticatedCreatorStudioSubscribersRoute,
     AuthenticatedCreatorStudioUploadRoute:
       AuthenticatedCreatorStudioUploadRoute,
     AuthenticatedCreatorStudioIndexRoute: AuthenticatedCreatorStudioIndexRoute,
