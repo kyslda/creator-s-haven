@@ -16,6 +16,7 @@ import { Route as AuthenticatedCreatorStudioRouteRouteImport } from './routes/_a
 import { Route as AuthenticatedCreatorStudioIndexRouteImport } from './routes/_authenticated/creator-studio/index'
 import { Route as AuthenticatedCreatorStudioUploadRouteImport } from './routes/_authenticated/creator-studio/upload'
 import { Route as AuthenticatedCreatorStudioSubscribersRouteImport } from './routes/_authenticated/creator-studio/subscribers'
+import { Route as AuthenticatedCreatorStudioSettingsRouteImport } from './routes/_authenticated/creator-studio/settings'
 import { Route as AuthenticatedCreatorStudioPostsRouteImport } from './routes/_authenticated/creator-studio/posts'
 import { Route as AuthenticatedCreatorStudioEarningsRouteImport } from './routes/_authenticated/creator-studio/earnings'
 
@@ -57,6 +58,12 @@ const AuthenticatedCreatorStudioSubscribersRoute =
     path: '/subscribers',
     getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
   } as any)
+const AuthenticatedCreatorStudioSettingsRoute =
+  AuthenticatedCreatorStudioSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
 const AuthenticatedCreatorStudioPostsRoute =
   AuthenticatedCreatorStudioPostsRouteImport.update({
     id: '/posts',
@@ -76,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
   '/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
   '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
+  '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
   '/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
@@ -85,6 +93,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
   '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
+  '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
   '/creator-studio': typeof AuthenticatedCreatorStudioIndexRoute
@@ -97,6 +106,7 @@ export interface FileRoutesById {
   '/_authenticated/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
   '/_authenticated/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
   '/_authenticated/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
+  '/_authenticated/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/_authenticated/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/_authenticated/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
   '/_authenticated/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/creator-studio'
     | '/creator-studio/earnings'
     | '/creator-studio/posts'
+    | '/creator-studio/settings'
     | '/creator-studio/subscribers'
     | '/creator-studio/upload'
     | '/creator-studio/'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/creator-studio/earnings'
     | '/creator-studio/posts'
+    | '/creator-studio/settings'
     | '/creator-studio/subscribers'
     | '/creator-studio/upload'
     | '/creator-studio'
@@ -129,6 +141,7 @@ export interface FileRouteTypes {
     | '/_authenticated/creator-studio'
     | '/_authenticated/creator-studio/earnings'
     | '/_authenticated/creator-studio/posts'
+    | '/_authenticated/creator-studio/settings'
     | '/_authenticated/creator-studio/subscribers'
     | '/_authenticated/creator-studio/upload'
     | '/_authenticated/creator-studio/'
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCreatorStudioSubscribersRouteImport
       parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
     }
+    '/_authenticated/creator-studio/settings': {
+      id: '/_authenticated/creator-studio/settings'
+      path: '/settings'
+      fullPath: '/creator-studio/settings'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioSettingsRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
     '/_authenticated/creator-studio/posts': {
       id: '/_authenticated/creator-studio/posts'
       path: '/posts'
@@ -211,6 +231,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedCreatorStudioRouteRouteChildren {
   AuthenticatedCreatorStudioEarningsRoute: typeof AuthenticatedCreatorStudioEarningsRoute
   AuthenticatedCreatorStudioPostsRoute: typeof AuthenticatedCreatorStudioPostsRoute
+  AuthenticatedCreatorStudioSettingsRoute: typeof AuthenticatedCreatorStudioSettingsRoute
   AuthenticatedCreatorStudioSubscribersRoute: typeof AuthenticatedCreatorStudioSubscribersRoute
   AuthenticatedCreatorStudioUploadRoute: typeof AuthenticatedCreatorStudioUploadRoute
   AuthenticatedCreatorStudioIndexRoute: typeof AuthenticatedCreatorStudioIndexRoute
@@ -221,6 +242,8 @@ const AuthenticatedCreatorStudioRouteRouteChildren: AuthenticatedCreatorStudioRo
     AuthenticatedCreatorStudioEarningsRoute:
       AuthenticatedCreatorStudioEarningsRoute,
     AuthenticatedCreatorStudioPostsRoute: AuthenticatedCreatorStudioPostsRoute,
+    AuthenticatedCreatorStudioSettingsRoute:
+      AuthenticatedCreatorStudioSettingsRoute,
     AuthenticatedCreatorStudioSubscribersRoute:
       AuthenticatedCreatorStudioSubscribersRoute,
     AuthenticatedCreatorStudioUploadRoute:
