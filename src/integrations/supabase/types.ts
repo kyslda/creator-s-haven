@@ -14,16 +14,430 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      creator_profiles: {
+        Row: {
+          cover_image_url: string | null
+          created_at: string
+          id: string
+          is_approved: boolean
+          social_links: Json | null
+          subscription_price: number
+          total_earnings: number
+          total_subscribers: number
+          updated_at: string
+          user_id: string
+          welcome_message: string | null
+        }
+        Insert: {
+          cover_image_url?: string | null
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          social_links?: Json | null
+          subscription_price?: number
+          total_earnings?: number
+          total_subscribers?: number
+          updated_at?: string
+          user_id: string
+          welcome_message?: string | null
+        }
+        Update: {
+          cover_image_url?: string | null
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          social_links?: Json | null
+          subscription_price?: number
+          total_earnings?: number
+          total_subscribers?: number
+          updated_at?: string
+          user_id?: string
+          welcome_message?: string | null
+        }
+        Relationships: []
+      }
+      credit_transactions: {
+        Row: {
+          amount: number
+          balance_after: number
+          created_at: string
+          description: string | null
+          id: string
+          reference_id: string | null
+          type: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          balance_after: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          type: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          balance_after?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          type?: Database["public"]["Enums"]["transaction_type"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      likes: {
+        Row: {
+          created_at: string
+          id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          content: string | null
+          created_at: string
+          id: string
+          is_read: boolean
+          media_price: number
+          media_url: string | null
+          receiver_id: string
+          sender_id: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          media_price?: number
+          media_url?: string | null
+          receiver_id: string
+          sender_id: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          media_price?: number
+          media_url?: string | null
+          receiver_id?: string
+          sender_id?: string
+        }
+        Relationships: []
+      }
+      post_purchases: {
+        Row: {
+          buyer_id: string
+          creator_id: string
+          credits_spent: number
+          id: string
+          post_id: string
+          purchased_at: string
+        }
+        Insert: {
+          buyer_id: string
+          creator_id: string
+          credits_spent: number
+          id?: string
+          post_id: string
+          purchased_at?: string
+        }
+        Update: {
+          buyer_id?: string
+          creator_id?: string
+          credits_spent?: number
+          id?: string
+          post_id?: string
+          purchased_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_purchases_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      posts: {
+        Row: {
+          access: Database["public"]["Enums"]["post_access"]
+          comments_count: number
+          created_at: string
+          creator_id: string
+          description: string | null
+          id: string
+          is_featured: boolean
+          likes_count: number
+          media_types: string[]
+          media_urls: string[]
+          price: number
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          access?: Database["public"]["Enums"]["post_access"]
+          comments_count?: number
+          created_at?: string
+          creator_id: string
+          description?: string | null
+          id?: string
+          is_featured?: boolean
+          likes_count?: number
+          media_types?: string[]
+          media_urls?: string[]
+          price?: number
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          access?: Database["public"]["Enums"]["post_access"]
+          comments_count?: number
+          created_at?: string
+          creator_id?: string
+          description?: string | null
+          id?: string
+          is_featured?: boolean
+          likes_count?: number
+          media_types?: string[]
+          media_urls?: string[]
+          price?: number
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          credits: number
+          display_name: string | null
+          email: string
+          id: string
+          is_banned: boolean
+          is_verified: boolean
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          credits?: number
+          display_name?: string | null
+          email: string
+          id: string
+          is_banned?: boolean
+          is_verified?: boolean
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          credits?: number
+          display_name?: string | null
+          email?: string
+          id?: string
+          is_banned?: boolean
+          is_verified?: boolean
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          post_id: string | null
+          reason: string
+          reported_user_id: string | null
+          reporter_id: string
+          status: Database["public"]["Enums"]["report_status"]
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          post_id?: string | null
+          reason: string
+          reported_user_id?: string | null
+          reporter_id: string
+          status?: Database["public"]["Enums"]["report_status"]
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          post_id?: string | null
+          reason?: string
+          reported_user_id?: string | null
+          reporter_id?: string
+          status?: Database["public"]["Enums"]["report_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscriptions: {
+        Row: {
+          created_at: string
+          creator_id: string
+          expires_at: string
+          id: string
+          price_paid: number
+          started_at: string
+          status: Database["public"]["Enums"]["subscription_status"]
+          subscriber_id: string
+        }
+        Insert: {
+          created_at?: string
+          creator_id: string
+          expires_at?: string
+          id?: string
+          price_paid?: number
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          subscriber_id: string
+        }
+        Update: {
+          created_at?: string
+          creator_id?: string
+          expires_at?: string
+          id?: string
+          price_paid?: number
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          subscriber_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_active_subscription: {
+        Args: { _creator: string; _subscriber: string }
+        Returns: boolean
+      }
+      has_purchased_post: {
+        Args: { _buyer: string; _post: string }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "user" | "creator" | "admin"
+      post_access: "free" | "subscribers" | "ppv"
+      report_status: "pending" | "reviewed" | "resolved"
+      subscription_status: "active" | "expired" | "cancelled"
+      transaction_type:
+        | "top_up"
+        | "subscription"
+        | "purchase"
+        | "earning"
+        | "refund"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +564,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["user", "creator", "admin"],
+      post_access: ["free", "subscribers", "ppv"],
+      report_status: ["pending", "reviewed", "resolved"],
+      subscription_status: ["active", "expired", "cancelled"],
+      transaction_type: [
+        "top_up",
+        "subscription",
+        "purchase",
+        "earning",
+        "refund",
+      ],
+    },
   },
 } as const
