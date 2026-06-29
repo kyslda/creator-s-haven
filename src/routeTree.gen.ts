@@ -18,6 +18,7 @@ import { Route as AuthenticatedCreatorStudioUploadRouteImport } from './routes/_
 import { Route as AuthenticatedCreatorStudioSubscribersRouteImport } from './routes/_authenticated/creator-studio/subscribers'
 import { Route as AuthenticatedCreatorStudioSettingsRouteImport } from './routes/_authenticated/creator-studio/settings'
 import { Route as AuthenticatedCreatorStudioPostsRouteImport } from './routes/_authenticated/creator-studio/posts'
+import { Route as AuthenticatedCreatorStudioMessagesRouteImport } from './routes/_authenticated/creator-studio/messages'
 import { Route as AuthenticatedCreatorStudioEarningsRouteImport } from './routes/_authenticated/creator-studio/earnings'
 
 const AuthRoute = AuthRouteImport.update({
@@ -70,6 +71,12 @@ const AuthenticatedCreatorStudioPostsRoute =
     path: '/posts',
     getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
   } as any)
+const AuthenticatedCreatorStudioMessagesRoute =
+  AuthenticatedCreatorStudioMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
 const AuthenticatedCreatorStudioEarningsRoute =
   AuthenticatedCreatorStudioEarningsRouteImport.update({
     id: '/earnings',
@@ -82,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
   '/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
+  '/creator-studio/messages': typeof AuthenticatedCreatorStudioMessagesRoute
   '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
   '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
@@ -92,6 +100,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
+  '/creator-studio/messages': typeof AuthenticatedCreatorStudioMessagesRoute
   '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
   '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
@@ -105,6 +114,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
   '/_authenticated/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
+  '/_authenticated/creator-studio/messages': typeof AuthenticatedCreatorStudioMessagesRoute
   '/_authenticated/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
   '/_authenticated/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/_authenticated/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/creator-studio'
     | '/creator-studio/earnings'
+    | '/creator-studio/messages'
     | '/creator-studio/posts'
     | '/creator-studio/settings'
     | '/creator-studio/subscribers'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/creator-studio/earnings'
+    | '/creator-studio/messages'
     | '/creator-studio/posts'
     | '/creator-studio/settings'
     | '/creator-studio/subscribers'
@@ -140,6 +152,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/creator-studio'
     | '/_authenticated/creator-studio/earnings'
+    | '/_authenticated/creator-studio/messages'
     | '/_authenticated/creator-studio/posts'
     | '/_authenticated/creator-studio/settings'
     | '/_authenticated/creator-studio/subscribers'
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCreatorStudioPostsRouteImport
       parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
     }
+    '/_authenticated/creator-studio/messages': {
+      id: '/_authenticated/creator-studio/messages'
+      path: '/messages'
+      fullPath: '/creator-studio/messages'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioMessagesRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
     '/_authenticated/creator-studio/earnings': {
       id: '/_authenticated/creator-studio/earnings'
       path: '/earnings'
@@ -230,6 +250,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedCreatorStudioRouteRouteChildren {
   AuthenticatedCreatorStudioEarningsRoute: typeof AuthenticatedCreatorStudioEarningsRoute
+  AuthenticatedCreatorStudioMessagesRoute: typeof AuthenticatedCreatorStudioMessagesRoute
   AuthenticatedCreatorStudioPostsRoute: typeof AuthenticatedCreatorStudioPostsRoute
   AuthenticatedCreatorStudioSettingsRoute: typeof AuthenticatedCreatorStudioSettingsRoute
   AuthenticatedCreatorStudioSubscribersRoute: typeof AuthenticatedCreatorStudioSubscribersRoute
@@ -241,6 +262,8 @@ const AuthenticatedCreatorStudioRouteRouteChildren: AuthenticatedCreatorStudioRo
   {
     AuthenticatedCreatorStudioEarningsRoute:
       AuthenticatedCreatorStudioEarningsRoute,
+    AuthenticatedCreatorStudioMessagesRoute:
+      AuthenticatedCreatorStudioMessagesRoute,
     AuthenticatedCreatorStudioPostsRoute: AuthenticatedCreatorStudioPostsRoute,
     AuthenticatedCreatorStudioSettingsRoute:
       AuthenticatedCreatorStudioSettingsRoute,
