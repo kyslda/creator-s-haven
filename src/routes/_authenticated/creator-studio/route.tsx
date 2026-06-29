@@ -9,7 +9,8 @@ export const Route = createFileRoute("/_authenticated/creator-studio")({
   component: StudioLayout,
 });
 
-const nav = [
+type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; exact?: boolean };
+const nav: NavItem[] = [
   { to: "/creator-studio", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/creator-studio/upload", label: "Publicar", icon: Upload },
   { to: "/creator-studio/posts", label: "Minhas publicações", icon: FileImage },
@@ -17,7 +18,7 @@ const nav = [
   { to: "/creator-studio/messages", label: "Mensagens", icon: MessageSquare },
   { to: "/creator-studio/earnings", label: "Ganhos", icon: DollarSign },
   { to: "/creator-studio/settings", label: "Definições", icon: Settings },
-] as const;
+];
 
 function StudioLayout() {
   const { user, loading } = useAuth();
