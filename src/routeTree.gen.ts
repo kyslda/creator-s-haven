@@ -9,38 +9,179 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedCreatorStudioRouteRouteImport } from './routes/_authenticated/creator-studio/route'
+import { Route as AuthenticatedCreatorStudioIndexRouteImport } from './routes/_authenticated/creator-studio/index'
+import { Route as AuthenticatedCreatorStudioUploadRouteImport } from './routes/_authenticated/creator-studio/upload'
+import { Route as AuthenticatedCreatorStudioSubscribersRouteImport } from './routes/_authenticated/creator-studio/subscribers'
+import { Route as AuthenticatedCreatorStudioSettingsRouteImport } from './routes/_authenticated/creator-studio/settings'
+import { Route as AuthenticatedCreatorStudioPostsRouteImport } from './routes/_authenticated/creator-studio/posts'
+import { Route as AuthenticatedCreatorStudioMessagesRouteImport } from './routes/_authenticated/creator-studio/messages'
+import { Route as AuthenticatedCreatorStudioEarningsRouteImport } from './routes/_authenticated/creator-studio/earnings'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedCreatorStudioRouteRoute =
+  AuthenticatedCreatorStudioRouteRouteImport.update({
+    id: '/creator-studio',
+    path: '/creator-studio',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCreatorStudioIndexRoute =
+  AuthenticatedCreatorStudioIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
+const AuthenticatedCreatorStudioUploadRoute =
+  AuthenticatedCreatorStudioUploadRouteImport.update({
+    id: '/upload',
+    path: '/upload',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
+const AuthenticatedCreatorStudioSubscribersRoute =
+  AuthenticatedCreatorStudioSubscribersRouteImport.update({
+    id: '/subscribers',
+    path: '/subscribers',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
+const AuthenticatedCreatorStudioSettingsRoute =
+  AuthenticatedCreatorStudioSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
+const AuthenticatedCreatorStudioPostsRoute =
+  AuthenticatedCreatorStudioPostsRouteImport.update({
+    id: '/posts',
+    path: '/posts',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
+const AuthenticatedCreatorStudioMessagesRoute =
+  AuthenticatedCreatorStudioMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
+const AuthenticatedCreatorStudioEarningsRoute =
+  AuthenticatedCreatorStudioEarningsRouteImport.update({
+    id: '/earnings',
+    path: '/earnings',
+    getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
+  '/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
+  '/creator-studio/messages': typeof AuthenticatedCreatorStudioMessagesRoute
+  '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
+  '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
+  '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
+  '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
+  '/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
+  '/creator-studio/messages': typeof AuthenticatedCreatorStudioMessagesRoute
+  '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
+  '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
+  '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
+  '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
+  '/creator-studio': typeof AuthenticatedCreatorStudioIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
+  '/_authenticated/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
+  '/_authenticated/creator-studio/messages': typeof AuthenticatedCreatorStudioMessagesRoute
+  '/_authenticated/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
+  '/_authenticated/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
+  '/_authenticated/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
+  '/_authenticated/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
+  '/_authenticated/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/creator-studio'
+    | '/creator-studio/earnings'
+    | '/creator-studio/messages'
+    | '/creator-studio/posts'
+    | '/creator-studio/settings'
+    | '/creator-studio/subscribers'
+    | '/creator-studio/upload'
+    | '/creator-studio/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/creator-studio/earnings'
+    | '/creator-studio/messages'
+    | '/creator-studio/posts'
+    | '/creator-studio/settings'
+    | '/creator-studio/subscribers'
+    | '/creator-studio/upload'
+    | '/creator-studio'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/creator-studio'
+    | '/_authenticated/creator-studio/earnings'
+    | '/_authenticated/creator-studio/messages'
+    | '/_authenticated/creator-studio/posts'
+    | '/_authenticated/creator-studio/settings'
+    | '/_authenticated/creator-studio/subscribers'
+    | '/_authenticated/creator-studio/upload'
+    | '/_authenticated/creator-studio/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +189,113 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/creator-studio': {
+      id: '/_authenticated/creator-studio'
+      path: '/creator-studio'
+      fullPath: '/creator-studio'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/creator-studio/': {
+      id: '/_authenticated/creator-studio/'
+      path: '/'
+      fullPath: '/creator-studio/'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioIndexRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
+    '/_authenticated/creator-studio/upload': {
+      id: '/_authenticated/creator-studio/upload'
+      path: '/upload'
+      fullPath: '/creator-studio/upload'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioUploadRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
+    '/_authenticated/creator-studio/subscribers': {
+      id: '/_authenticated/creator-studio/subscribers'
+      path: '/subscribers'
+      fullPath: '/creator-studio/subscribers'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioSubscribersRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
+    '/_authenticated/creator-studio/settings': {
+      id: '/_authenticated/creator-studio/settings'
+      path: '/settings'
+      fullPath: '/creator-studio/settings'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioSettingsRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
+    '/_authenticated/creator-studio/posts': {
+      id: '/_authenticated/creator-studio/posts'
+      path: '/posts'
+      fullPath: '/creator-studio/posts'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioPostsRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
+    '/_authenticated/creator-studio/messages': {
+      id: '/_authenticated/creator-studio/messages'
+      path: '/messages'
+      fullPath: '/creator-studio/messages'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioMessagesRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
+    '/_authenticated/creator-studio/earnings': {
+      id: '/_authenticated/creator-studio/earnings'
+      path: '/earnings'
+      fullPath: '/creator-studio/earnings'
+      preLoaderRoute: typeof AuthenticatedCreatorStudioEarningsRouteImport
+      parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
   }
 }
 
+interface AuthenticatedCreatorStudioRouteRouteChildren {
+  AuthenticatedCreatorStudioEarningsRoute: typeof AuthenticatedCreatorStudioEarningsRoute
+  AuthenticatedCreatorStudioMessagesRoute: typeof AuthenticatedCreatorStudioMessagesRoute
+  AuthenticatedCreatorStudioPostsRoute: typeof AuthenticatedCreatorStudioPostsRoute
+  AuthenticatedCreatorStudioSettingsRoute: typeof AuthenticatedCreatorStudioSettingsRoute
+  AuthenticatedCreatorStudioSubscribersRoute: typeof AuthenticatedCreatorStudioSubscribersRoute
+  AuthenticatedCreatorStudioUploadRoute: typeof AuthenticatedCreatorStudioUploadRoute
+  AuthenticatedCreatorStudioIndexRoute: typeof AuthenticatedCreatorStudioIndexRoute
+}
+
+const AuthenticatedCreatorStudioRouteRouteChildren: AuthenticatedCreatorStudioRouteRouteChildren =
+  {
+    AuthenticatedCreatorStudioEarningsRoute:
+      AuthenticatedCreatorStudioEarningsRoute,
+    AuthenticatedCreatorStudioMessagesRoute:
+      AuthenticatedCreatorStudioMessagesRoute,
+    AuthenticatedCreatorStudioPostsRoute: AuthenticatedCreatorStudioPostsRoute,
+    AuthenticatedCreatorStudioSettingsRoute:
+      AuthenticatedCreatorStudioSettingsRoute,
+    AuthenticatedCreatorStudioSubscribersRoute:
+      AuthenticatedCreatorStudioSubscribersRoute,
+    AuthenticatedCreatorStudioUploadRoute:
+      AuthenticatedCreatorStudioUploadRoute,
+    AuthenticatedCreatorStudioIndexRoute: AuthenticatedCreatorStudioIndexRoute,
+  }
+
+const AuthenticatedCreatorStudioRouteRouteWithChildren =
+  AuthenticatedCreatorStudioRouteRoute._addFileChildren(
+    AuthenticatedCreatorStudioRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCreatorStudioRouteRoute: typeof AuthenticatedCreatorStudioRouteRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCreatorStudioRouteRoute:
+    AuthenticatedCreatorStudioRouteRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
