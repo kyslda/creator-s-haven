@@ -17,6 +17,7 @@ import { Route as AuthenticatedMessagesRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedFeedRouteImport } from './routes/_authenticated/feed'
 import { Route as AuthenticatedCreatorStudioRouteRouteImport } from './routes/_authenticated/creator-studio/route'
 import { Route as AuthenticatedCreatorStudioIndexRouteImport } from './routes/_authenticated/creator-studio/index'
+import { Route as AuthenticatedCreatorUsernameRouteImport } from './routes/_authenticated/creator.$username'
 import { Route as AuthenticatedCreatorStudioUploadRouteImport } from './routes/_authenticated/creator-studio/upload'
 import { Route as AuthenticatedCreatorStudioSubscribersRouteImport } from './routes/_authenticated/creator-studio/subscribers'
 import { Route as AuthenticatedCreatorStudioSettingsRouteImport } from './routes/_authenticated/creator-studio/settings'
@@ -64,6 +65,12 @@ const AuthenticatedCreatorStudioIndexRoute =
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
+const AuthenticatedCreatorUsernameRoute =
+  AuthenticatedCreatorUsernameRouteImport.update({
+    id: '/creator/$username',
+    path: '/creator/$username',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedCreatorStudioUploadRoute =
   AuthenticatedCreatorStudioUploadRouteImport.update({
@@ -115,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
+  '/creator/$username': typeof AuthenticatedCreatorUsernameRoute
   '/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
 }
 export interface FileRoutesByTo {
@@ -129,6 +137,7 @@ export interface FileRoutesByTo {
   '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
+  '/creator/$username': typeof AuthenticatedCreatorUsernameRoute
   '/creator-studio': typeof AuthenticatedCreatorStudioIndexRoute
 }
 export interface FileRoutesById {
@@ -146,6 +155,7 @@ export interface FileRoutesById {
   '/_authenticated/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/_authenticated/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/_authenticated/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
+  '/_authenticated/creator/$username': typeof AuthenticatedCreatorUsernameRoute
   '/_authenticated/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
 }
 export interface FileRouteTypes {
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/creator-studio/settings'
     | '/creator-studio/subscribers'
     | '/creator-studio/upload'
+    | '/creator/$username'
     | '/creator-studio/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/creator-studio/settings'
     | '/creator-studio/subscribers'
     | '/creator-studio/upload'
+    | '/creator/$username'
     | '/creator-studio'
   id:
     | '__root__'
@@ -193,6 +205,7 @@ export interface FileRouteTypes {
     | '/_authenticated/creator-studio/settings'
     | '/_authenticated/creator-studio/subscribers'
     | '/_authenticated/creator-studio/upload'
+    | '/_authenticated/creator/$username'
     | '/_authenticated/creator-studio/'
   fileRoutesById: FileRoutesById
 }
@@ -259,6 +272,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/creator-studio/'
       preLoaderRoute: typeof AuthenticatedCreatorStudioIndexRouteImport
       parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
+    '/_authenticated/creator/$username': {
+      id: '/_authenticated/creator/$username'
+      path: '/creator/$username'
+      fullPath: '/creator/$username'
+      preLoaderRoute: typeof AuthenticatedCreatorUsernameRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/creator-studio/upload': {
       id: '/_authenticated/creator-studio/upload'
@@ -341,6 +361,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedFeedRoute: typeof AuthenticatedFeedRoute
   AuthenticatedMessagesRoute: typeof AuthenticatedMessagesRoute
   AuthenticatedWalletRoute: typeof AuthenticatedWalletRoute
+  AuthenticatedCreatorUsernameRoute: typeof AuthenticatedCreatorUsernameRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -349,6 +370,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedFeedRoute: AuthenticatedFeedRoute,
   AuthenticatedMessagesRoute: AuthenticatedMessagesRoute,
   AuthenticatedWalletRoute: AuthenticatedWalletRoute,
+  AuthenticatedCreatorUsernameRoute: AuthenticatedCreatorUsernameRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
