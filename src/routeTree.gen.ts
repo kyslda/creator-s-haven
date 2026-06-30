@@ -12,8 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedWalletRouteImport } from './routes/_authenticated/wallet'
+import { Route as AuthenticatedMessagesRouteImport } from './routes/_authenticated/messages'
+import { Route as AuthenticatedFeedRouteImport } from './routes/_authenticated/feed'
 import { Route as AuthenticatedCreatorStudioRouteRouteImport } from './routes/_authenticated/creator-studio/route'
 import { Route as AuthenticatedCreatorStudioIndexRouteImport } from './routes/_authenticated/creator-studio/index'
+import { Route as AuthenticatedCreatorUsernameRouteImport } from './routes/_authenticated/creator.$username'
 import { Route as AuthenticatedCreatorStudioUploadRouteImport } from './routes/_authenticated/creator-studio/upload'
 import { Route as AuthenticatedCreatorStudioSubscribersRouteImport } from './routes/_authenticated/creator-studio/subscribers'
 import { Route as AuthenticatedCreatorStudioSettingsRouteImport } from './routes/_authenticated/creator-studio/settings'
@@ -35,6 +39,21 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedWalletRoute = AuthenticatedWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMessagesRoute = AuthenticatedMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFeedRoute = AuthenticatedFeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedCreatorStudioRouteRoute =
   AuthenticatedCreatorStudioRouteRouteImport.update({
     id: '/creator-studio',
@@ -46,6 +65,12 @@ const AuthenticatedCreatorStudioIndexRoute =
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedCreatorStudioRouteRoute,
+  } as any)
+const AuthenticatedCreatorUsernameRoute =
+  AuthenticatedCreatorUsernameRouteImport.update({
+    id: '/creator/$username',
+    path: '/creator/$username',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedCreatorStudioUploadRoute =
   AuthenticatedCreatorStudioUploadRouteImport.update({
@@ -88,23 +113,31 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
+  '/feed': typeof AuthenticatedFeedRoute
+  '/messages': typeof AuthenticatedMessagesRoute
+  '/wallet': typeof AuthenticatedWalletRoute
   '/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
   '/creator-studio/messages': typeof AuthenticatedCreatorStudioMessagesRoute
   '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
   '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
+  '/creator/$username': typeof AuthenticatedCreatorUsernameRoute
   '/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/feed': typeof AuthenticatedFeedRoute
+  '/messages': typeof AuthenticatedMessagesRoute
+  '/wallet': typeof AuthenticatedWalletRoute
   '/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
   '/creator-studio/messages': typeof AuthenticatedCreatorStudioMessagesRoute
   '/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
   '/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
+  '/creator/$username': typeof AuthenticatedCreatorUsernameRoute
   '/creator-studio': typeof AuthenticatedCreatorStudioIndexRoute
 }
 export interface FileRoutesById {
@@ -113,12 +146,16 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/creator-studio': typeof AuthenticatedCreatorStudioRouteRouteWithChildren
+  '/_authenticated/feed': typeof AuthenticatedFeedRoute
+  '/_authenticated/messages': typeof AuthenticatedMessagesRoute
+  '/_authenticated/wallet': typeof AuthenticatedWalletRoute
   '/_authenticated/creator-studio/earnings': typeof AuthenticatedCreatorStudioEarningsRoute
   '/_authenticated/creator-studio/messages': typeof AuthenticatedCreatorStudioMessagesRoute
   '/_authenticated/creator-studio/posts': typeof AuthenticatedCreatorStudioPostsRoute
   '/_authenticated/creator-studio/settings': typeof AuthenticatedCreatorStudioSettingsRoute
   '/_authenticated/creator-studio/subscribers': typeof AuthenticatedCreatorStudioSubscribersRoute
   '/_authenticated/creator-studio/upload': typeof AuthenticatedCreatorStudioUploadRoute
+  '/_authenticated/creator/$username': typeof AuthenticatedCreatorUsernameRoute
   '/_authenticated/creator-studio/': typeof AuthenticatedCreatorStudioIndexRoute
 }
 export interface FileRouteTypes {
@@ -127,23 +164,31 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/creator-studio'
+    | '/feed'
+    | '/messages'
+    | '/wallet'
     | '/creator-studio/earnings'
     | '/creator-studio/messages'
     | '/creator-studio/posts'
     | '/creator-studio/settings'
     | '/creator-studio/subscribers'
     | '/creator-studio/upload'
+    | '/creator/$username'
     | '/creator-studio/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/feed'
+    | '/messages'
+    | '/wallet'
     | '/creator-studio/earnings'
     | '/creator-studio/messages'
     | '/creator-studio/posts'
     | '/creator-studio/settings'
     | '/creator-studio/subscribers'
     | '/creator-studio/upload'
+    | '/creator/$username'
     | '/creator-studio'
   id:
     | '__root__'
@@ -151,12 +196,16 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/creator-studio'
+    | '/_authenticated/feed'
+    | '/_authenticated/messages'
+    | '/_authenticated/wallet'
     | '/_authenticated/creator-studio/earnings'
     | '/_authenticated/creator-studio/messages'
     | '/_authenticated/creator-studio/posts'
     | '/_authenticated/creator-studio/settings'
     | '/_authenticated/creator-studio/subscribers'
     | '/_authenticated/creator-studio/upload'
+    | '/_authenticated/creator/$username'
     | '/_authenticated/creator-studio/'
   fileRoutesById: FileRoutesById
 }
@@ -189,6 +238,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/wallet': {
+      id: '/_authenticated/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof AuthenticatedWalletRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/messages': {
+      id: '/_authenticated/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof AuthenticatedMessagesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/feed': {
+      id: '/_authenticated/feed'
+      path: '/feed'
+      fullPath: '/feed'
+      preLoaderRoute: typeof AuthenticatedFeedRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/creator-studio': {
       id: '/_authenticated/creator-studio'
       path: '/creator-studio'
@@ -202,6 +272,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/creator-studio/'
       preLoaderRoute: typeof AuthenticatedCreatorStudioIndexRouteImport
       parentRoute: typeof AuthenticatedCreatorStudioRouteRoute
+    }
+    '/_authenticated/creator/$username': {
+      id: '/_authenticated/creator/$username'
+      path: '/creator/$username'
+      fullPath: '/creator/$username'
+      preLoaderRoute: typeof AuthenticatedCreatorUsernameRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/creator-studio/upload': {
       id: '/_authenticated/creator-studio/upload'
@@ -281,11 +358,19 @@ const AuthenticatedCreatorStudioRouteRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedCreatorStudioRouteRoute: typeof AuthenticatedCreatorStudioRouteRouteWithChildren
+  AuthenticatedFeedRoute: typeof AuthenticatedFeedRoute
+  AuthenticatedMessagesRoute: typeof AuthenticatedMessagesRoute
+  AuthenticatedWalletRoute: typeof AuthenticatedWalletRoute
+  AuthenticatedCreatorUsernameRoute: typeof AuthenticatedCreatorUsernameRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCreatorStudioRouteRoute:
     AuthenticatedCreatorStudioRouteRouteWithChildren,
+  AuthenticatedFeedRoute: AuthenticatedFeedRoute,
+  AuthenticatedMessagesRoute: AuthenticatedMessagesRoute,
+  AuthenticatedWalletRoute: AuthenticatedWalletRoute,
+  AuthenticatedCreatorUsernameRoute: AuthenticatedCreatorUsernameRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

@@ -26,12 +26,18 @@ function AuthPage() {
   const [accountType, setAccountType] = useState<"user" | "creator">(type);
   const [submitting, setSubmitting] = useState(false);
 
+  async function resolveDestination(userId: string): Promise<"/creator-studio" | "/feed"> {
+    const { data } = await supabase.from("user_roles").select("role").eq("user_id", userId);
+    const roles = (data ?? []).map((r: any) => r.role);
+    return roles.includes("creator") || roles.includes("admin") ? "/creator-studio" : "/feed";
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
     try {
       if (isRegister) {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -43,13 +49,21 @@ function AuthPage() {
         toast.success(accountType === "creator"
           ? "Conta criada! A tua candidatura a criador está pendente de aprovação."
           : "Conta criada! Bem-vinda à Xclusive.");
-        await new Promise((r) => setTimeout(r, 400));
-        navigate({ to: accountType === "creator" ? "/creator-studio" : "/" });
+        // If no session (email confirmation required), try immediate sign-in
+        let userId = data.user?.id;
+        if (!data.session) {
+          const { data: signIn } = await supabase.auth.signInWithPassword({ email, password });
+          userId = signIn.user?.id ?? userId;
+        }
+        await new Promise((r) => setTimeout(r, 500)); // wait for trigger
+        const dest = userId ? await resolveDestination(userId) : (accountType === "creator" ? "/creator-studio" : "/feed");
+        navigate({ to: dest });
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast.success("Bem-vinda de volta.");
-        navigate({ to: "/creator-studio" });
+        const dest = data.user ? await resolveDestination(data.user.id) : "/feed";
+        navigate({ to: dest });
       }
     } catch (err: any) {
       toast.error(err?.message ?? "Algo correu mal.");
