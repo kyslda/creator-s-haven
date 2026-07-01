@@ -3,6 +3,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { requestCreatorAccount } from "@/lib/creator-account.functions";
 
 const authSearch = z.object({
   mode: z.enum(["login", "register"]).optional().default("login"),
@@ -26,10 +27,16 @@ function AuthPage() {
   const [accountType, setAccountType] = useState<"user" | "creator">(type);
   const [submitting, setSubmitting] = useState(false);
 
-  async function resolveDestination(userId: string): Promise<"/creator-studio" | "/feed"> {
-    const { data } = await supabase.from("user_roles").select("role").eq("user_id", userId);
-    const roles = (data ?? []).map((r: any) => r.role);
-    return roles.includes("creator") || roles.includes("admin") ? "/creator-studio" : "/feed";
+  async function resolveDestination(userId: string, fallback: "user" | "creator" = "user"): Promise<"/creator-studio" | "/feed"> {
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      const { data } = await supabase.from("user_roles").select("role").eq("user_id", userId);
+      const roles = (data ?? []).map((r: any) => r.role);
+      if (roles.includes("creator") || roles.includes("admin")) return "/creator-studio";
+      if (roles.includes("user") && fallback === "user") return "/feed";
+      await new Promise((r) => setTimeout(r, 250));
+    }
+
+    return fallback === "creator" ? "/creator-studio" : "/feed";
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -55,8 +62,11 @@ function AuthPage() {
           const { data: signIn } = await supabase.auth.signInWithPassword({ email, password });
           userId = signIn.user?.id ?? userId;
         }
-        await new Promise((r) => setTimeout(r, 500)); // wait for trigger
-        const dest = userId ? await resolveDestination(userId) : (accountType === "creator" ? "/creator-studio" : "/feed");
+        if (accountType === "creator" && userId) {
+          await requestCreatorAccount();
+        }
+
+        const dest = userId ? await resolveDestination(userId, accountType) : (accountType === "creator" ? "/creator-studio" : "/feed");
         navigate({ to: dest });
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
