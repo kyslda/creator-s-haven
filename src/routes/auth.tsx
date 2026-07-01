@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,6 +26,10 @@ function AuthPage() {
   const [username, setUsername] = useState("");
   const [accountType, setAccountType] = useState<"user" | "creator">(type);
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    setAccountType(type);
+  }, [type]);
 
   async function resolveDestination(userId: string, fallback: "user" | "creator" = "user"): Promise<"/creator-studio" | "/feed"> {
     for (let attempt = 0; attempt < 5; attempt += 1) {
