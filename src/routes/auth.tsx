@@ -39,6 +39,15 @@ function AuthPage() {
     return fallback === "creator" ? "/creator-studio" : "/feed";
   }
 
+  async function ensureActiveSession() {
+    for (let attempt = 0; attempt < 8; attempt += 1) {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) return data.session;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+    return null;
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
@@ -56,17 +65,27 @@ function AuthPage() {
         toast.success(accountType === "creator"
           ? "Conta criada! A tua candidatura a criador está pendente de aprovação."
           : "Conta criada! Bem-vinda à Xclusive.");
-        // If no session (email confirmation required), try immediate sign-in
         let userId = data.user?.id;
         if (!data.session) {
-          const { data: signIn } = await supabase.auth.signInWithPassword({ email, password });
+          const { data: signIn, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+          if (signInError) throw signInError;
           userId = signIn.user?.id ?? userId;
         }
-        if (accountType === "creator" && userId) {
-          await requestCreatorAccount();
+
+        const activeSession = data.session ?? await ensureActiveSession();
+        if (!activeSession) {
+          toast.success("Conta criada. Confirma o email e entra para aceder ao painel.");
+          navigate({ to: "/auth", search: { mode: "login", type: accountType } });
+          return;
         }
 
-        const dest = userId ? await resolveDestination(userId, accountType) : (accountType === "creator" ? "/creator-studio" : "/feed");
+        if (accountType === "creator" && userId) {
+          await requestCreatorAccount();
+          navigate({ to: "/creator-studio" });
+          return;
+        }
+
+        const dest = userId ? await resolveDestination(userId, accountType) : "/feed";
         navigate({ to: dest });
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
