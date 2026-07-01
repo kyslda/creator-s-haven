@@ -426,7 +426,6 @@ export type Database = {
         }
         Returns: boolean
       }
-      request_creator_account: { Args: never; Returns: boolean }
     }
     Enums: {
       app_role: "user" | "creator" | "admin"
